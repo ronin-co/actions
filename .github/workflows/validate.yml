@@ -13,6 +13,10 @@ on:
         required: false
         default: false
         type: boolean
+    secrets:
+      ORG_CODECOV_TOKEN:
+        description: 'Token for uploading code coverage reports to Codecov'
+        required: false
 
 jobs:
   lint:
