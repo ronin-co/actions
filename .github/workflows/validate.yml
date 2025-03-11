@@ -3,19 +3,24 @@ name: Validate
 on:
   workflow_call:
     inputs:
-      package_dir:
-        description: 'Directory of the package to validate'
+      bun_version:
+        description: "The version of Bun to use"
         required: false
-        default: './'
+        default: "1.1.34"
+        type: string
+      package_dir:
+        description: "Directory of the package to validate"
+        required: false
+        default: "./"
         type: string
       upload_coverage:
-        description: 'Whether to upload code coverage reports to Codecov'
+        description: "Whether to upload code coverage reports to Codecov"
         required: false
         default: false
         type: boolean
     secrets:
       ORG_CODECOV_TOKEN:
-        description: 'Token for uploading code coverage reports to Codecov'
+        description: "Token for uploading code coverage reports to Codecov"
         required: false
 
 jobs:
@@ -29,7 +34,7 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.1.34
+          bun-version: ${{ inputs.bun_version }}
 
       - name: Install Dependencies
         run: |
@@ -51,7 +56,7 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.1.34
+          bun-version: ${{ inputs.bun_version }}
 
       - name: Install Dependencies
         run: |
