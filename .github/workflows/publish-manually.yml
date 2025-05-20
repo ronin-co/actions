@@ -14,6 +14,11 @@ on:
         required: false
         default: './'
         type: string
+      workspaces:
+        description: 'Whether multiple packages should be published.'
+        required: false
+        default: false
+        type: boolean
     secrets:
       NPM_TOKEN_READ_AND_WRITE:
         description: 'npm token with read and write permissions'
@@ -70,10 +75,17 @@ jobs:
           git config --global user.email "135042755+ronin-app[bot]@users.noreply.github.com"
 
       - name: Bump Package Version
+        if: inputs.workspaces == false
         run: |
           cd ${{ inputs.package_dir }}
-          npm version ${{ inputs.version_type }} --git-tag-version=false
-          echo "NEW_VERSION=$(npm pkg get version --workspaces=false | tr -d '\"')" >> $GITHUB_ENV
+          npm version ${{ inputs.version_type }} --no-git-tag-version
+          echo "NEW_VERSION=$(npm pkg get version --workspaces=false | jq -r .)" >> $GITHUB_ENV
+
+      - name: Bump Package Versions
+        if: inputs.workspaces == true
+        run: |
+          npm version ${{ inputs.version_type }} --no-git-tag-version --no-workspaces-update --workspaces
+          echo "NEW_VERSION=$(npm pkg get version --workspaces=true | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
 
       - name: Push New Version
         env:
