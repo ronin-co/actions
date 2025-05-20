@@ -6,7 +6,7 @@ on:
             bun-version:
               description: Bun Version
               required: false
-              default: '1.1.4'
+              default: '1.2.10'
               type: string
         secrets:
             ORG_GH_RONIN_APP_ID:
@@ -48,7 +48,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
 
       - name: Set up Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ inputs.bun-version }}
 
