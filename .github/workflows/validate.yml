@@ -18,6 +18,11 @@ on:
         required: false
         default: false
         type: boolean
+      build:
+        description: 'Whether to build before testing'
+        required: false
+        default: false
+        type: boolean
     secrets:
       ORG_CODECOV_TOKEN:
         description: 'Token for uploading code coverage reports to Codecov'
@@ -62,6 +67,12 @@ jobs:
         run: |
           cd ${{ inputs.package_dir }}
           bun install
+
+      - name: Build
+        if: inputs.build == true
+        run: |
+          cd ${{ inputs.package_dir }}
+          bun run build
 
       - name: Test
         run: |
