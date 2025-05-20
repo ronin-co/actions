@@ -78,13 +78,13 @@ jobs:
         if: inputs.workspaces == false
         run: |
           cd ${{ inputs.package_dir }}
-          npm version ${{ inputs.version_type }} --git-tag-version=false
+          npm version ${{ inputs.version_type }} --no-git-tag-version
           echo "NEW_VERSION=$(npm pkg get version --workspaces=false | jq -r .)" >> $GITHUB_ENV
 
       - name: Bump Package Versions
         if: inputs.workspaces == true
         run: |
-          npm version ${{ inputs.version_type }} --git-tag-version=false --workspaces --no-workspaces-update
+          npm version ${{ inputs.version_type }} --no-git-tag-version --no-workspaces-update --workspaces
           echo "NEW_VERSION=$(npm pkg get version --workspaces=true | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
 
       - name: Push New Version
