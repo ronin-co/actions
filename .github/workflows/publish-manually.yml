@@ -101,6 +101,12 @@ jobs:
           git push origin "${{ env.NEW_VERSION }}"
 
       - name: Publish npm Package
+        if: inputs.workspaces == false
         run: |
           cd ${{ inputs.package_dir }}
           npm publish
+
+      - name: Publish npm Packages
+        if: inputs.workspaces == true
+        run: |
+          npm publish --workspaces=true
