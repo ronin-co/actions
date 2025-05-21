@@ -109,5 +109,4 @@ jobs:
       - name: Publish npm Packages
         if: inputs.workspaces == true
         run: |
-          cd ${{ inputs.package_dir }}
           npm publish --workspaces=true
