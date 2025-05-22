@@ -87,6 +87,10 @@ jobs:
           npm version ${{ inputs.version_type }} --no-git-tag-version --no-workspaces-update --workspaces
           echo "NEW_VERSION=$(npm pkg get version --workspaces=true | jq -r 'to_entries[0].value')" >> $GITHUB_ENV
 
+      - name: Adjust Lockfile
+        if: inputs.workspaces == true
+        run: bun install
+
       - name: Push New Version
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
