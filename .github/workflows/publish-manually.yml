@@ -89,7 +89,7 @@ jobs:
 
       - name: Adjust Lockfile
         if: inputs.workspaces == true
-        run: bun install
+        run: bun install --force
 
       - name: Push New Version
         env:
