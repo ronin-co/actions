@@ -44,7 +44,7 @@ jobs:
       - name: Bump Package
         uses: ronin-co/actions/.github/actions/bump-version@main
         with:
-          package_dir: './'
+          package_dir: ${{ inputs.package_dir }}
 
       - name: Get package name from package.json
         id: package-name
