@@ -4,23 +4,23 @@ on:
   workflow_call:
     inputs:
       bun_version:
-        description: 'The version of Bun to use'
+        description: "The version of Bun to use"
         required: false
-        default: '1.2.10'
+        default: "1.2.10"
         type: string
       package_dir:
-        description: 'Directory of the package to validate'
+        description: "Directory of the package to validate"
         required: false
-        default: './'
+        default: "./"
         type: string
       upload_coverage:
-        description: 'Whether to upload code coverage reports to Codecov'
+        description: "Whether to upload code coverage reports to Codecov"
         required: false
         default: false
         type: boolean
     secrets:
       ORG_CODECOV_TOKEN:
-        description: 'Token for uploading code coverage reports to Codecov'
+        description: "Token for uploading code coverage reports to Codecov"
         required: false
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ${{ inputs.package_dir }}
-          bun install
+          bun install --frozen-lockfile
 
       - name: Lint
         run: |
@@ -61,7 +61,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ${{ inputs.package_dir }}
-          bun install
+          bun install --frozen-lockfile
 
       - name: Test
         run: |
