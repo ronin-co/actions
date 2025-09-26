@@ -3,6 +3,11 @@ name: Publish Experimental Packages
 on:
   workflow_call:
     inputs:
+      bun_version:
+        description: 'The version of Bun to use'
+        required: false
+        default: "1.2.22"
+        type: string
       package_dir:
         description: 'Directory of the package to publish'
         required: false
@@ -33,7 +38,7 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.2.10
+          bun-version: ${{ inputs.bun_version }}
 
       - name: Install Dependencies
         run: bun install --frozen-lockfile

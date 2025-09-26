@@ -3,10 +3,10 @@ name: Update
 on:
     workflow_call:
         inputs:
-            bun-version:
-              description: Bun Version
+            bun_version:
+              description: 'The version of Bun to use'
               required: false
-              default: '1.2.10'
+              default: '1.2.22'
               type: string
         secrets:
             ORG_GH_RONIN_APP_ID:
@@ -50,7 +50,7 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: ${{ inputs.bun-version }}
+          bun-version: ${{ inputs.bun_version }}
 
       # Cache the local `node_modules` directory.
       - name: Restore npm Cache
